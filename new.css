@@ -1,0 +1,815 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  list-style: none;
+  text-decoration: none;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background: #0a0e17;
+  color: #e0e0e0;
+  min-height: 100vh;
+  display: flex;
+}
+
+/* ============================================
+           واجهة الترحيب (مصححة)
+           ============================================ */
+#welcome {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #0a0e17, #1a2332);
+  z-index: 9999;
+  text-align: center;
+  padding: 20px;
+  animation: fadeInWelcome 1s ease-in;
+}
+
+@keyframes fadeInWelcome {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes fadeOutWelcome {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(1.05);
+  }
+}
+
+#welcome.hidden {
+  animation: fadeOutWelcome 0.8s ease-in forwards;
+}
+
+#welcome h2 {
+  font-family: "Amiri", serif;
+  font-size: 38px;
+  color: #64ffda;
+  margin-top: 20px;
+  text-shadow: 0 0 40px rgba(100, 255, 218, 0.1);
+  line-height: 1.8;
+}
+
+#welcome h3 {
+  font-family: "Amiri", serif;
+  font-size: 24px;
+  color: #8899aa;
+  margin-top: 15px;
+}
+
+/* ============================================
+           القائمة الجانبية (مصححة)
+           ============================================ */
+.menu {
+  width: 65px;
+  height: 100vh;
+  background-color: #172a45;
+  padding: 5px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  border-right: 1px solid rgba(100, 255, 218, 0.1);
+  box-shadow: 4px 0 20px rgba(2, 12, 27, 0.3);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+}
+
+.menu:hover {
+  width: 260px;
+}
+
+.menu::-webkit-scrollbar {
+  width: 4px;
+}
+
+.menu::-webkit-scrollbar-track {
+  background: #112240;
+  border-radius: 4px;
+}
+
+.menu::-webkit-scrollbar-thumb {
+  background: #64ffda;
+  border-radius: 4px;
+}
+
+.img-pro {
+  margin: 10px 0;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid #64ffda;
+  flex-shrink: 0;
+  box-shadow: 0 0 10px rgba(100, 255, 218, 0.3);
+}
+
+.img-pro img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.img-pro img:hover {
+  transform: scale(1.1);
+  transition: 0.3s ease;
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  text-transform: uppercase;
+  padding-left: 5px;
+  margin-bottom: 20px;
+}
+
+.profile h2 {
+  font-size: 18px;
+  color: #64ffda;
+  letter-spacing: 1px;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.menu:hover .profile h2 {
+  opacity: 1;
+}
+
+ul {
+  list-style: none;
+  position: relative;
+  height: auto;
+  min-height: calc(100vh - 120px);
+}
+
+ul li a {
+  text-decoration: none;
+  padding: 12px;
+  margin: 8px 0;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 35px;
+  transition: 0.3s ease;
+  color: #ccd6f6;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+ul li a:hover,
+ul li.active a {
+  background-color: rgba(100, 255, 218, 0.1) !important;
+  color: #64ffda !important;
+}
+
+ul li a i {
+  font-size: 24px;
+  flex-shrink: 0;
+  width: 30px;
+  text-align: center;
+}
+
+.log-out {
+  position: relative;
+  bottom: auto;
+  width: 100%;
+  margin-top: 20px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(100, 255, 218, 0.1);
+}
+
+.log-out a {
+  background-color: rgba(244, 63, 94, 0.15);
+  border: 1px solid rgba(244, 63, 94, 0.3);
+  color: #f43f5e;
+}
+
+.log-out a:hover {
+  background-color: #f43f5e !important;
+  color: #fff !important;
+}
+
+/* ============================================
+           المحتوى الرئيسي (مصحح)
+           ============================================ */
+#one {
+  display: flex;
+  width: 100%;
+}
+
+.contant {
+  width: 100%;
+  padding: 20px;
+  margin-left: 65px;
+  transition: margin-left 0.5s ease;
+}
+
+.menu:hover ~ #one .contant,
+.menu:hover + .contant {
+  margin-left: 260px;
+}
+
+/* ============================================
+           بطاقات المعلومات (مصححة)
+           ============================================ */
+.title-info {
+  background-color: #112240;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 8px;
+  margin: 15px 0;
+  border-left: 4px solid #64ffda;
+}
+
+.title-info p {
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: #64ffda;
+}
+
+.data-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.data-info .box {
+  background-color: #172a45;
+  height: 120px;
+  flex-basis: 200px;
+  flex-grow: 1;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  transition: 0.3s ease;
+  border: 1px solid rgba(100, 255, 218, 0.05);
+}
+
+.data-info .box:hover {
+  transform: translateY(-5px);
+  background-color: #1e3a8a;
+  border-color: rgba(100, 255, 218, 0.3);
+  box-shadow: 0 10px 20px rgba(2, 12, 27, 0.4);
+}
+
+.data-info .box i {
+  font-size: 35px;
+  color: #64ffda;
+}
+
+.data-info .box .data p {
+  color: #8892b0;
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.data-info .box .data span {
+  font-size: 28px;
+  font-weight: bold;
+  color: #f8fafc;
+}
+
+/* ============================================
+           الجدول (مصحح)
+           ============================================ */
+#performanceMatrixSection {
+  display: block;
+}
+
+table {
+  width: 100%;
+  text-align: left;
+  border-spacing: 0;
+  border-collapse: separate;
+  border-spacing: 0 8px;
+  margin-top: 10px;
+}
+
+th,
+td {
+  height: 45px;
+  padding: 10px 15px;
+}
+
+th {
+  background-color: #112240;
+  color: #64ffda;
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  border-bottom: 2px solid rgba(100, 255, 218, 0.2);
+}
+
+td {
+  background-color: #172a45;
+  transition: 0.2s ease;
+}
+
+tr:hover td {
+  background-color: #1e3a8a;
+}
+
+/* ============================================
+           بيئة الخوارزميات (مصححة)
+           ============================================ */
+#algorithmEnvironment {
+  display: none;
+}
+
+.algo-environment {
+  background: rgba(17, 34, 64, 0.8);
+  border-radius: 12px;
+  padding: 20px;
+  margin-top: 20px;
+  border: 1px solid rgba(100, 255, 218, 0.2);
+}
+
+.array-container {
+  background: #0a192f;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 25px;
+  border: 1px solid rgba(100, 255, 218, 0.15);
+}
+
+.array-display {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+  margin-bottom: 20px;
+  min-height: 100px;
+}
+
+.array-element {
+  background: linear-gradient(145deg, #172a45, #112240);
+  width: 70px;
+  height: 70px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  border: 1px solid rgba(100, 255, 218, 0.3);
+  transition: 0.3s ease;
+}
+
+.array-element:hover {
+  transform: translateY(-3px);
+  border-color: #64ffda;
+  box-shadow: 0 5px 15px rgba(100, 255, 218, 0.2);
+}
+
+.array-element span:first-child {
+  font-size: 22px;
+  color: #64ffda;
+  font-weight: bold;
+}
+
+.array-element span:last-child {
+  font-size: 10px;
+  color: #8892b0;
+}
+
+.array-element.swapping {
+  animation: swapAnim 0.3s ease;
+  background: linear-gradient(145deg, #64ffda, #38bdf8) !important;
+  transform: scale(1.05);
+  box-shadow: 0 0 15px #64ffda;
+}
+
+.array-element.comparing {
+  background: linear-gradient(145deg, #f59e0b, #d97706) !important;
+  border-color: #f59e0b;
+  transform: scale(1.02);
+}
+
+.array-element.sorted {
+  animation: sortedAnim 0.5s ease;
+  background: linear-gradient(145deg, #10b981, #059669) !important;
+}
+
+@keyframes swapAnim {
+  0% {
+    transform: translateX(0) scale(1);
+  }
+  30% {
+    transform: translateX(-10px) scale(1.05);
+  }
+  70% {
+    transform: translateX(10px) scale(1.05);
+  }
+  100% {
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes sortedAnim {
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1.08);
+    background: #10b981;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.array-input-group {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 15px;
+  flex-wrap: wrap;
+}
+
+.array-input-group input {
+  padding: 12px 15px;
+  border-radius: 8px;
+  border: 1px solid rgba(100, 255, 218, 0.3);
+  background: #112240;
+  color: #f8fafc;
+  flex: 1;
+  min-width: 200px;
+  outline: none;
+  transition: 0.3s;
+}
+
+.array-input-group input:focus {
+  border-color: #64ffda;
+  box-shadow: 0 0 5px rgba(100, 255, 218, 0.3);
+}
+
+.array-input-group button,
+.algo-btn {
+  background: linear-gradient(135deg, #1e3a8a, #172a45);
+  border: 1px solid rgba(100, 255, 218, 0.3);
+  padding: 10px 20px;
+  border-radius: 8px;
+  color: #64ffda;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s ease;
+  font-size: 14px;
+}
+
+.array-input-group button:hover,
+.algo-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, #2d4a8a, #1e3a8a);
+  border-color: #64ffda;
+  box-shadow: 0 5px 15px rgba(100, 255, 218, 0.2);
+}
+
+.algo-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.algo-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.result-area {
+  background: #112240;
+  border-radius: 10px;
+  padding: 15px 20px;
+  margin-top: 20px;
+  border-right: 3px solid #64ffda;
+  color: #ccd6f6;
+  font-size: 14px;
+}
+
+.chart-container {
+  margin-top: 25px;
+  padding: 15px;
+  background: #112240;
+  border-radius: 12px;
+  border: 1px solid rgba(100, 255, 218, 0.15);
+}
+
+canvas {
+  max-height: 300px;
+  width: 100%;
+}
+
+.sort-speed-control {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #112240;
+  padding: 8px 15px;
+  border-radius: 30px;
+  border: 1px solid rgba(100, 255, 218, 0.2);
+}
+
+.sort-speed-control label {
+  font-size: 12px;
+  color: #8892b0;
+}
+
+.sort-speed-control input {
+  width: 120px;
+  margin: 0;
+  accent-color: #64ffda;
+}
+
+/* ============================================
+           أبراج هانوي (مصححة)
+           ============================================ */
+.hanoi-visualization {
+  background: #112240;
+  border-radius: 16px;
+  padding: 25px;
+  margin-top: 20px;
+  border: 1px solid rgba(100, 255, 218, 0.2);
+}
+
+.towers-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+  gap: 40px;
+  padding: 20px;
+  min-height: 400px;
+  background: #0a192f;
+  border-radius: 12px;
+}
+
+.tower {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  height: 320px;
+  position: relative;
+}
+
+.tower-label {
+  color: #64ffda;
+  margin-top: 15px;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.tower-base {
+  width: 180px;
+  height: 10px;
+  background: linear-gradient(90deg, #64ffda, #38bdf8);
+  border-radius: 5px;
+  margin-top: 5px;
+}
+
+.tower-rod {
+  width: 6px;
+  height: 220px;
+  background: linear-gradient(180deg, #8892b0, #ccd6f6);
+  border-radius: 3px;
+}
+
+.disks-container {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 220px;
+  position: absolute;
+  bottom: 12px;
+  left: 0;
+  right: 0;
+}
+
+.disk {
+  height: 28px;
+  border-radius: 14px;
+  margin: 2px 0;
+  transition: all 0.3s ease;
+  background: linear-gradient(90deg, #64ffda, #38bdf8);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.tower-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  width: 100%;
+}
+
+.rod-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.hanoi-controls {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin-top: 25px;
+  flex-wrap: wrap;
+}
+
+.hanoi-controls input {
+  padding: 10px 15px;
+  border-radius: 8px;
+  border: 1px solid rgba(100, 255, 218, 0.3);
+  background: #112240;
+  color: #f8fafc;
+  font-size: 16px;
+  width: 100px;
+  text-align: center;
+}
+
+.hanoi-controls input:focus {
+  outline: none;
+  border-color: #64ffda;
+}
+
+.hanoi-controls button {
+  background: linear-gradient(135deg, #1e3a8a, #172a45);
+  border: 1px solid rgba(100, 255, 218, 0.3);
+  padding: 10px 20px;
+  border-radius: 8px;
+  color: #64ffda;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.hanoi-controls button:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, #2d4a8a, #1e3a8a);
+}
+
+.move-counter {
+  text-align: center;
+  margin-top: 20px;
+  padding: 12px;
+  background: rgba(100, 255, 218, 0.1);
+  border-radius: 10px;
+  color: #64ffda;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.move-step {
+  text-align: center;
+  margin-top: 15px;
+  padding: 12px;
+  color: #ccd6f6;
+  font-family: "Courier New", monospace;
+  font-size: 13px;
+  max-height: 100px;
+  overflow-y: auto;
+  background: #0a192f;
+  border-radius: 10px;
+  border: 1px solid rgba(100, 255, 218, 0.1);
+}
+
+.speed-control {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #112240;
+  padding: 8px 15px;
+  border-radius: 30px;
+  border: 1px solid rgba(100, 255, 218, 0.2);
+}
+
+.speed-control label {
+  font-size: 12px;
+  color: #8892b0;
+}
+
+.speed-control input {
+  width: 120px;
+  margin: 0;
+  accent-color: #64ffda;
+}
+
+/* ============================================
+           شريط التمرير
+           ============================================ */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #112240;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #64ffda;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #38bdf8;
+}
+
+/* ============================================
+           استجابة للأجهزة الصغيرة
+           ============================================ */
+@media (max-width: 768px) {
+  .contant {
+    padding: 15px;
+    margin-left: 65px;
+  }
+
+  .array-element {
+    width: 55px;
+    height: 55px;
+  }
+
+  .array-element span:first-child {
+    font-size: 16px;
+  }
+
+  .towers-container {
+    gap: 15px;
+  }
+
+  .tower-base {
+    width: 100px;
+  }
+
+  #welcome h2 {
+    font-size: 24px;
+  }
+
+  #welcome h3 {
+    font-size: 18px;
+  }
+}
+@media screen and (max-width: 600px) {
+    /* تصغير حجوم الخطوط الكبيرة والعناوين لكي لا تخرج من شاشة الجوال */
+    h1 {
+        font-size: 1.6rem !important;
+    }
+    h2 {
+        font-size: 1.3rem !important;
+    }
+
+    /* جعل جدول مصفوفة الأداء (Performance Matrix) قابلاً للتمرير الأفقي بدلاً من الانضغاط */
+    .matrix-table, table {
+        display: block !important;
+        width: 100% !important;
+        overflow-x: auto !important;
+        white-space: nowrap !important;
+    }
+
+    /* ضبط حجم منطقة محاكاة أبراج هانوي (Hanoi Towers Visualizer) لتناسب عرض الجوال */
+    .hanoi-canvas, .hanoi-view, #canvas {
+        width: 100% !important;
+        height: auto !important;
+        max-width: 100% !important;
+    }
+
+    /* ترتيب بطاقات تعقيد الوقت والمساحة (Big-O Cards) تحت بعضها */
+    .cards-container, .stats-grid {
+        grid-template-columns: 1fr !important; /* عمود واحد فقط */
+        gap: 10px !important;
+    }
+}
+
